@@ -56,7 +56,7 @@ a:focus-visible { outline: 2px solid var(--red-fill); outline-offset: 4px; }
   color: var(--red); white-space: nowrap;
   display: grid; grid-template-columns: 1fr var(--gap) 1fr; align-items: center;
   opacity: var(--vis, 0);
-  transform: translate3d(calc((var(--sp, 0.5) - 0.5) * -10vw), calc((1 - var(--vis, 0)) * 5svh), 0); }
+  transform: translate3d(calc((var(--sp, 0.5) - 0.5) * var(--tx, -6vw)), calc((1 - var(--vis, 0)) * 5svh), 0); }
 .word span:first-child { grid-column: 1; justify-self: end; }
 .word span:last-child { grid-column: 3; justify-self: start; }
 .word[data-stage="0"] { --vis: 1; --sp: 0; }
@@ -81,9 +81,13 @@ a:focus-visible { outline: 2px solid var(--red-fill); outline-offset: 4px; }
   .bar__mark { font-size: 21px; }
   .bar__cta { padding: 11px 16px; font-size: 15px; }
   .hero { --k: 0.56; --ty: -3svh; }
-  .word { --fs: 9.8vw; --gap: 29vw; }
+  /* show the whole 16:9 frame (no cover crop) so scaling it down never cuts the scales or the sword */
+  .film, .still { inset: auto; left: 50%; top: 0; width: calc(100svh * 16 / 9); height: 100%; margin-left: calc(100svh * -8 / 9); object-fit: fill; }
+  .word { --tx: -3vw; }
+  .word { --fs: 9.4vw; --gap: 37vw; }
   .word[data-stage="1"] { --fs: 11vw; --gap: 22vw; }
-  .word[data-stage="2"] { --fs: 11.5vw; --gap: 24vw; }
+  .word[data-stage="2"] { --fs: 11.5vw; --gap: 31vw; }
+  .dot--r { display: none; }
   .line { bottom: 4svh; }
   .close { font-size: 13vw; }
 }
@@ -91,7 +95,7 @@ a:focus-visible { outline: 2px solid var(--red-fill); outline-offset: 4px; }
 /* ---------- still mode (reduced motion or no JS): one composed frame, every line readable ---------- */
 html:not(.wow-js) .hero__view, .wow-still .hero__view { height: auto; overflow: visible; display: block; }
 .wow-still .film, html:not(.wow-js) .film { display: none !important; }
-.wow-still .still, html:not(.wow-js) .still { display: block !important; position: relative; inset: auto; width: 100%; height: 72svh; transform: none; object-fit: contain; }
+.wow-still .still, html:not(.wow-js) .still { display: block !important; position: relative; inset: auto; left: auto; margin-left: 0; width: 100%; height: 72svh; transform: none; object-fit: contain; }
 .wow-still .words, html:not(.wow-js) .words { position: absolute; inset: 0 0 auto 0; height: 72svh; }
 .wow-still .word, html:not(.wow-js) .word { transform: none; }
 .wow-still .word:not([data-stage="0"]), html:not(.wow-js) .word:not([data-stage="0"]) { display: none; }
@@ -101,4 +105,4 @@ html:not(.wow-js) .hero__view, .wow-still .hero__view { height: auto; overflow: 
 .wow-still .line--close, html:not(.wow-js) .line--close { place-content: start; justify-items: start; text-align: left; color: var(--ink); padding: 0; }
 .wow-still .line--close .label, html:not(.wow-js) .line--close .label { color: var(--ink); }
 .wow-still .close, html:not(.wow-js) .close { font-size: min(11vw, 64px); }
-@media (max-width: 899px) { .wow-still .word { --fs: 9.8vw; --gap: 29vw; } }
+@media (max-width: 899px) { .wow-still .word { --fs: 9.4vw; --gap: 37vw; } }
